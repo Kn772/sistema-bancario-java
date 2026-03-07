@@ -26,14 +26,35 @@ public class Main {
 
                     System.out.println("\n=== Criar Conta ===");
 
-                    System.out.print("Nome: ");
-                    String nome = sc.nextLine();
-
-                    System.out.print("Sobrenome: ");
-                    String sobrenome = sc.nextLine();
-
-                    System.out.print("Email: ");
-                    String email = sc.nextLine();
+                    String nome;
+                    while (true){
+                        System.out.print("Nome: ");
+                        nome = sc.nextLine();
+                        if(nome.matches("^[A-Za-z]{2,25}$")) {
+                            break;
+                        }
+                        System.out.println("Nome inválido!");
+                    }
+                    
+                    String sobrenome;
+                    while (true){
+                        System.out.print("Sobrenome: ");
+                        sobrenome = sc.nextLine();
+                        if(sobrenome.matches("^[A-Za-z]{2,35}$")) {
+                            break;
+                        }
+                        System.out.println("Sobrenome inválido!");
+                    }
+                    
+                    String email;
+                    while (true) {
+                        System.out.print("Email: ");
+                        email = sc.nextLine();
+                        if (email.matches("^[A-Za-z0-9._%+-]+@(gmail|hotmail|outlook)\\.com$")){
+                            break;
+                        }
+                        System.out.println("Email inválido!");
+                    }
 
                     String telefone;
                     while (true){
@@ -46,8 +67,23 @@ public class Main {
                         System.out.println("Digite apenas números (entre 9 e 11 dígitos).");
                     }
 
-                    System.out.print("Senha: ");
-                    String senha = sc.nextLine();
+                    String senha;
+                    while (true) {
+
+                        System.out.print("Senha: ");
+                        senha = sc.nextLine();
+
+                        if (senha.matches("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}$")) {
+                            break;
+                        }
+
+                        System.out.println("Senha inválida!");
+                        System.out.println("A senha precisa ter:");
+                        System.out.println("- mínimo 8 caracteres");
+                        System.out.println("- pelo menos 1 letra");
+                        System.out.println("- pelo menos 1 número");
+                        System.out.println("- pelo menos 1 símbolo (@$!%*?&)");
+                    }
 
                     Usuario novo = banco.criarUsuario(nome, sobrenome, email, telefone, senha);
 

@@ -15,34 +15,34 @@ public class Banco {
         return 500 + random.nextInt(9501);
     }
 
-    public Usuario criarUsuario(String nome, String sobrenome, String email, String telefone, String senha) {
-        Usuario u = new Usuario();
-
-        u.nome = nome;
-        u.sobrenome = sobrenome;
-        u.email = email;
-        u.telefone = telefone;
-        u.senha = senha;
-
-        u.agencia = "0772";
-        u.conta = gerarNumeroConta();
-        u.saldo = gerarSaldoInicial();
-
-        usuarios.add(u);
-
-        arquivo.salvarUsuarios(usuarios);
-
-        return u;
-    }
-
-    public Usuario login(String identicador, String senha) {
+    public boolean emailExiste(String email){
         for (Usuario u : usuarios) {
-            if ((u.email.equals(identicador) || u.conta.equals(identicador)) 
-                && u.senha.equals(senha)) {
-                
-                return u;
+            if (u.email.equalsIgnoreCase(email)){
+                return true;
             }
         }
+        return false;
+    }
+
+    public Usuario criarUsuario(String nome, String sobrenome, String email, String telefone, String senha) {
+        if (emailExiste(email)){
+            return null;
+        }
+        Usuario novo = new Usuario(nome, sobrenome, email, telefone, senha);
+        usuarios.add(novo);
+        return novo;
+    }
+
+    public Usuario login(String email, String senha) {
+
+        for (Usuario u : usuarios) {
+
+            if (u.email.equalsIgnoreCase(email) && u.senha.equals(senha)) {
+                return u;
+            }
+
+        }
+
         return null;
     }
 
@@ -62,7 +62,7 @@ public class Banco {
         return false;
     }
 
-    public boolean tranferir(Usuario origem, Usuario destino, double valor) {
+    public boolean transferir(Usuario origem, Usuario destino, double valor) {
         if (valor > 0 && origem.saldo >= valor) {
             origem.saldo -= valor;
             destino.saldo += valor;

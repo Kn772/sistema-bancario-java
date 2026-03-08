@@ -14,6 +14,17 @@ public class Usuario {
 
     double saldo;
 
-    ArrayList<String> historico = new ArrayList<>();
-    
+    ArrayList<String> historico;
+
+    public Usuario(String nome, String sobrenome, String email, String telefone, String senha) {
+
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.email = email;
+        this.telefone = telefone;
+        this.senha = senha;
+
+        historico = new ArrayList<>();
+    }
+
 }

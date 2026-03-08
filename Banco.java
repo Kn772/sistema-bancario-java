@@ -5,6 +5,10 @@ public class Banco {
     ArrayList<Usuario> usuarios = new ArrayList<>();
     Random random = new Random();
 
+    public Banco(){
+        usuarios = arquivo.carregarUsuarios();
+    }
+
     public String gerarNumeroConta() {
         int numero = 1000000 + random.nextInt(90000000);
         int digito = random.nextInt(10);
@@ -29,15 +33,20 @@ public class Banco {
             return null;
         }
         Usuario novo = new Usuario(nome, sobrenome, email, telefone, senha);
+        novo.agencia = "0772";
+        novo.conta = gerarNumeroConta();
+        novo.saldo = gerarSaldoInicial();
         usuarios.add(novo);
+        arquivo.salvarUsuarios(usuarios);
         return novo;
     }
 
-    public Usuario login(String email, String senha) {
+    public Usuario login(String identificador, String senha) {
 
         for (Usuario u : usuarios) {
 
-            if (u.email.equalsIgnoreCase(email) && u.senha.equals(senha)) {
+            if ((u.email.equalsIgnoreCase(identificador) || u.conta.equals(identificador)) 
+                && u.senha.equals(senha)) {
                 return u;
             }
 

@@ -86,7 +86,10 @@ public class Main {
                     }
 
                     Usuario novo = banco.criarUsuario(nome, sobrenome, email, telefone, senha);
-
+                    if (novo == null) {
+                        System.out.println("Esse email já está cadastrado!");
+                        break;
+                    }
                     System.out.println("\nConta criada com sucesso!");
                     System.out.println("Agência: " + novo.agencia);
                     System.out.println("Conta: " + novo.conta);
